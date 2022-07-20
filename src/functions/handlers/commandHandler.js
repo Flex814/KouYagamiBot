@@ -1,7 +1,9 @@
+const { REST } = require("@discordjs/rest");
+const { Routes } = require("discord-api-types/v9");
 const fs = require("fs");
 
-module.exports = (clients) => {
-  clients.handleCommands = async () => {
+module.exports = (client) => {
+  client.handleCommands = async () => {
     const commandFolders = fs.readdirSync(`./src/commands`);
     for (const folder of commandFolders) {
       const commandFiles = fs
@@ -17,6 +19,21 @@ module.exports = (clients) => {
           `Command: ${command.data.name} has been passed through the handler`
         );
       }
+    }
+
+    const clientId = "998732640301629551";
+    const guildId = "511376020671299589";
+    const rest = new REST({ version: "9" }).setToken(process.env.token);
+    try {
+      console.log("Started regreshing application (/) commands.");
+
+      await rest.put(Routes.applicationGuildCommands(clientId, guildId), {
+        body: client.commandArray,
+      });
+
+      console.log("Successfully reloaded application (/) commands.");
+    } catch (error) {
+      console.error(error);
     }
   };
 };
