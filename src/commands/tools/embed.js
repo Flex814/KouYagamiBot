@@ -8,7 +8,7 @@ module.exports = {
     const embed = new EmbedBuilder()
       .setTitle(`This is an EMBED!`)
       .setDescription(`This is a very cool description!`)
-      // .setColor(client.color)
+      .setColor(0x18e1ee)
       .setImage(client.user.displayAvatarURL())
       .setThumbnail(client.user.displayAvatarURL())
       .setTimestamp(Date.now())
